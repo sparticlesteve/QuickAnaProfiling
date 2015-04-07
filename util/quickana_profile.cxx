@@ -96,6 +96,9 @@ int main(int argc, char* argv[])
   else nEntries = std::min(nEntries, nEntriesAvail);
   Info(appName, "Processing %lli events", nEntries);
 
+  // Start Callgrind monitoring here if delayed
+  CALLGRIND_START_INSTRUMENTATION;
+
   // Loop over the events
   Long64_t entryPrintFreq = nEntries/10;
   for(Long64_t entry = 0; entry < nEntries; ++entry) {
@@ -108,6 +111,9 @@ int main(int argc, char* argv[])
 
     store.clear();
   }
+
+  // End Callgrind monitoring here
+  CALLGRIND_STOP_INSTRUMENTATION;
 
   Info(appName, "Application finished");
   return EXIT_SUCCESS;
