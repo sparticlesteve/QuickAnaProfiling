@@ -88,6 +88,15 @@ int main(int argc, char* argv[])
 
   // Create and configure the QuickAna tool
   std::unique_ptr<ana::QuickAna> quickAna( new ana::QuickAna("quickana") );
+  quickAna->eventinfoDef = "default";
+  quickAna->electronDef = "default";
+  quickAna->muonDef = "default";
+  quickAna->photonDef = "default";
+  quickAna->tauDef = "default";
+  quickAna->jetDef = "default";
+  quickAna->jetKine = "pt > 20e3";
+  quickAna->metDef = "default";
+  quickAna->orDef = "default";
   CHECK( quickAna->initialize() );
 
   // Number of entries to process
