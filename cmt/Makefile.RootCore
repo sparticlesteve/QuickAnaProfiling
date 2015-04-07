@@ -13,7 +13,7 @@ PACKAGE          = QuickAnaProfiling
 PACKAGE_PRELOAD  = 
 
 # additional compilation flags to pass (not propagated to dependent packages):
-PACKAGE_CXXFLAGS = -I/afs/cern.ch/sw/lcg/external/valgrind/3.8.0/x86_64-slc6-gcc48-opt/include/
+PACKAGE_CXXFLAGS = -I$(SFT_HOME_valgrind)/include
 
 # additional compilation flags to pass (propagated to dependent packages):
 PACKAGE_OBJFLAGS = 
