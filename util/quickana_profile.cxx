@@ -49,7 +49,7 @@ int main(int argc, char* argv[])
   desc.add_options()
     ("help,h", "Display this help message")
     ("input-file,i", po::value<std::string>()->required(), "Input xAOD file")
-    ("output-file,o", po::value<std::string>()->required(), "Output ROOT file")
+    //("output-file,o", po::value<std::string>()->required(), "Output ROOT file")
     ("num-events,n", po::value<Long64_t>()->default_value(-1),
      "Number of events to process");
   po::variables_map vm;
@@ -68,7 +68,7 @@ int main(int argc, char* argv[])
     return EXIT_FAILURE;
   }
   const std::string inputFileName = vm["input-file"].as<std::string>();
-  const std::string outputFileName = vm["output-file"].as<std::string>();
+  //const std::string outputFileName = vm["output-file"].as<std::string>();
   Long64_t nEntries = vm["num-events"].as<Long64_t>();
 
   // Initialize xAOD infrastructure
