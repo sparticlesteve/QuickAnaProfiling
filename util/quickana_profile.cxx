@@ -92,7 +92,8 @@ int main(int argc, char* argv[])
 
   // Number of entries to process
   Long64_t nEntriesAvail = event.getEntries();
-  if(nEntries < 0) nEntries = std::min(nEntries, nEntriesAvail);
+  if(nEntries < 0) nEntries = nEntriesAvail;
+  else nEntries = std::min(nEntries, nEntriesAvail);
   Info(appName, "Processing %lli events", nEntries);
 
   // Loop over the events
@@ -103,7 +104,7 @@ int main(int argc, char* argv[])
     event.getEntry(entry);
 
     // Run QuickAna
-    CHECK( quickAna->process(event).isFailure() );
+    CHECK( quickAna->process(event) );
 
     store.clear();
   }
