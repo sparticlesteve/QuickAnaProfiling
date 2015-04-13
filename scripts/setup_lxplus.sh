@@ -6,4 +6,4 @@ PATH=$QuickAna_Valgrind_home/bin:$PATH
 export VALGRIND_LIB=$QuickAna_Valgrind_home/lib/valgrind
 
 # Mimic the SFT env variable used in this package's Makefile
-SFT_HOME_valgrind=$QuickAna_Valgrind_home
+export SFT_HOME_valgrind=$QuickAna_Valgrind_home
