@@ -51,7 +51,8 @@ int main(int argc, char* argv[])
     ("input-file,i", po::value<std::string>()->required(), "Input xAOD file")
     //("output-file,o", po::value<std::string>()->required(), "Output ROOT file")
     ("num-events,n", po::value<Long64_t>()->default_value(-1),
-     "Number of events to process");
+     "Number of events to process")
+    ("sys", "Activate systematics");
   po::variables_map vm;
   try {
     po::store(po::command_line_parser(argc, argv).
@@ -99,6 +100,14 @@ int main(int argc, char* argv[])
   quickAna->orDef = "default";
   CHECK( quickAna->initialize() );
 
+  // Prepare the systematics
+  std::vector<CP::SystematicSet> sysList;
+  if(vm.count("sys"))
+    sysList = CP::make_systematics_vector( quickAna->recommendedSystematics() );
+  else
+    sysList.push_back(CP::SystematicSet());
+  CHECK( quickAna->setSystematics(sysList) );
+
   // Number of entries to process
   Long64_t nEntriesAvail = event.getEntries();
   if(nEntries < 0) nEntries = nEntriesAvail;
@@ -115,8 +124,13 @@ int main(int argc, char* argv[])
       Info(appName, "Processing entry %lli", entry);
     event.getEntry(entry);
 
-    // Run QuickAna
-    CHECK( quickAna->process(event) );
+    // Loop over the systematics
+    for(auto sys : quickAna->systematics()){
+      CHECK( quickAna->applySystematicVariation(sys) );
+
+      // Run QuickAna
+      CHECK( quickAna->process(event) );
+    }
 
     store.clear();
   }
