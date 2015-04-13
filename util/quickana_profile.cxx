@@ -1,5 +1,6 @@
 // System includes
 #include <memory>
+#include <chrono>
 
 // ROOT includes
 #include "TFile.h"
@@ -113,12 +114,14 @@ int main(int argc, char* argv[])
   if(nEntries < 0) nEntries = nEntriesAvail;
   else nEntries = std::min(nEntries, nEntriesAvail);
   Info(appName, "Processing %lli events", nEntries);
+  Long64_t entryPrintFreq = nEntries/10;
+
+  const auto startTime = std::chrono::steady_clock::now();
 
   // Start Callgrind monitoring here if delayed
   CALLGRIND_START_INSTRUMENTATION;
 
   // Loop over the events
-  Long64_t entryPrintFreq = nEntries/10;
   for(Long64_t entry = 0; entry < nEntries; ++entry) {
     if((entry % entryPrintFreq) == 0)
       Info(appName, "Processing entry %lli", entry);
@@ -137,6 +140,16 @@ int main(int argc, char* argv[])
 
   // End Callgrind monitoring here
   CALLGRIND_STOP_INSTRUMENTATION;
+
+  // Report the average event rate
+  const auto endTime = std::chrono::steady_clock::now();
+  std::chrono::duration<float> duration = endTime - startTime;
+  float evtTime = duration.count();
+  //float evtTime = (float) (endTime - startTime) / std::chrono::seconds(1);
+  float evtRate = (float) nEntries / evtTime;
+  Info(appName, "Event loop finished");
+  Info(appName, "Processing time: %.2f s", evtTime);
+  Info(appName, "Average event rate: %.2f evts/s", evtRate);
 
   Info(appName, "Application finished");
   return EXIT_SUCCESS;
