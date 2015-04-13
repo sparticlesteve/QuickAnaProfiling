@@ -53,7 +53,9 @@ int main(int argc, char* argv[])
     //("output-file,o", po::value<std::string>()->required(), "Output ROOT file")
     ("num-events,n", po::value<Long64_t>()->default_value(-1),
      "Number of events to process")
-    ("sys", "Activate systematics");
+    ("sys", "Activate systematics")
+    ("scheduler", po::value<std::string>()->default_value("basic"),
+     "Tool-scheduler implementation [basic or optimized]");
   po::variables_map vm;
   try {
     po::store(po::command_line_parser(argc, argv).
@@ -99,6 +101,10 @@ int main(int argc, char* argv[])
   quickAna->jetKine = "pt > 20e3";
   quickAna->metDef = "default";
   quickAna->orDef = "default";
+
+  // Scheduler
+  quickAna->schedulerDef = vm["scheduler"].as<std::string>();
+
   CHECK( quickAna->initialize() );
 
   // Prepare the systematics
