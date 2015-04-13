@@ -29,7 +29,8 @@ At the moment there's just one executable, which you can run with
     quickana_profile -i [input-file] -n [num-events] ...
 
 Some useful command line options:
-* Turn on systematics with ```--sys```
-* Use the optimized scheduler with ```--scheduler optimized```
+* Turn on systematics with ```--sys```.
+* Use the optimized scheduler with ```--scheduler optimized```.
+
 Run with `-h` to see the full list of command line options.
 I plan to add more functionality incrementally.
