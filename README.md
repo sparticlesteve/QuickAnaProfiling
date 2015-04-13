@@ -20,7 +20,7 @@ be able to use the valgrind installation on CVMFS:
 This command will setup the environment completely. However, there may be some
 compatibility issues with ROOT 6 requiring a newer version of valgrind. I have
 tested usage of 3.10.0 on lxplus. An example setup script is at
-[](scripts/setup_lxplus.sh).
+[scripts/setup_lxplus.sh](scripts/setup_lxplus.sh).
 
 ## Running
 
